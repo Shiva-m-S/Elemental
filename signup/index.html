@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sign-up</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+    />
+</head>
+<body style="user-select: none;">
+    <form>
+        <div class="container-sm border border-3 border-dark shadow shadow-lg mt-5 py-4 px-5 bg-light" style="border-radius: 10px;width:min(500px ,80%)">
+            <h2 class="text-center text-primary">SIGN UP...</h2>
+            <p class="text-info text-center">All the fields are mendatory</p>
+            <label for="username" >Username :</label><br>
+            <input id="username" type="text" class="form-control shadow-sm" id="username" onkeyup="this.value=this.value.replace(/[^a-z0-9@]/g,''),document.getElementById('taken').innerText='',document.getElementById('invalid').innerText = ''" required><br>
+            <label for="email" >E-mail ID:</label><br>
+            <input id="e-mail" type="email" class="form-control shadow-sm" id="e-mail" required onkeyup="document.getElementById('invalid').innerText = ''"><br>
+            <label for="password"  > Create Password:</label><br>
+            <input id="password" type="password" class="form-control shadow-sm" id="password" minlength="8"  onkeyup="document.getElementById('invalid').innerText = ''" required><br>
+            <label class="form-check-label">
+                <input class="corm-check-input" type="checkbox"required> I agree T&C.
+            </label><br>
+            <p id="msg" class="text-center text-danger my-2"></p>
+            <!-- <p id="invalid"></p> -->
+            <div id="buttons" class="text-center mt-3">
+                <button id="submit" type="button" class="btn btn-primary me-4 shadow-lg">Submit</button>
+                <button id="reset" type="reset"  class="btn btn-warning ms-4 shadow-lg">Reset</button>
+            </div>
+            <p  class="text-center mt-3"><a href="/log-in" id="already">Already have an account?</a></p><br>
+            <div id="otp" class="d-none">
+                <label for="enter-otp">Enter the four digit otp sent to your e-mail :</label><br>
+                <input class="form-control" maxlength="4" onkeyup="this.value=this.value.replace(/[^0-9]/g,''),document.getElementById('taken').innerText='',document.getElementById('invalid').innerText = ''" id="enter-otp"> <br>
+                <div  class="text-center"><button type="button" id="submit-otp" class="btn btn-primary me-4 shadow-lg">SUBMIT</button></div>
+            </div>
+            <div class="form-check form-switch ">
+                <input type="checkbox" class="form-check-input " id="myswitch" onclick="this.parentElement.parentElement.classList.toggle('bg-dark'),this.parentElement.parentElement.classList.toggle('text-white')">
+                <label for="myswitch" class="form-check-label" >Dark-Mode</label>
+            </div>
+            
+        </div>    
+    </form>
+    <script src="signup/script.js"></script>
+</body>
+</html>

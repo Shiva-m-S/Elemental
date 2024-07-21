@@ -1,7 +1,10 @@
 var iframe = document.getElementById('iframe');
 var elementsList = document.getElementsByClassName('ele');
+var user;
+
 for(let i = 0;i<elementsList.length;i++){
-    elementsList[i].setAttribute('onclick','change(this.firstElementChild.innerText),desaperate(),desaperate()')
+    elementsList[i].addEventListener('click',desaperate)
+    elementsList[i].setAttribute('onclick','change(this.firstElementChild.innerText),this.classList.toggle("highlighted")');
 }
 
 function change(name){    
@@ -45,5 +48,15 @@ function desaperate(name,className){
     }
     details(name,className)
 }
-
-// onclick="change(this.firstElementChild.innerText),desaperate()"
+if(user == undefined){
+    const logged_user = new XMLHttpRequest();
+    logged_user.onload = function(){
+        user = this.responseText;
+        if(user !== 'false'){
+            document.getElementById('log-in').innerHTML = '<a href="/log-out" class="dropdown-item">Log-out</a>';
+            document.getElementById('home').innerHTML = this.responseText;
+        }
+    }
+    logged_user.open('get','/loggeduser');
+    logged_user.send();
+}
