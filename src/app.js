@@ -2,36 +2,21 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-const staticpath = path.join(__dirname,'../Home');
-app.use(express.static(staticpath))
-app.get('/elements.json',(req,res)=>{
-    const elements = path.join(__dirname, "/elements/elements.json")
-    const json = fs.readFileSync(elements, "utf-8");
-    res.send(json);
-  });
-app.listen(8000,()=>{
-    console.log('Listening:8000')
-});
-
-// const express = require('express');
-// const fs = require('fs');
-// const path = require('path');
 const nodemailer = require('nodemailer');
-// const mysql = require('mysql');
-// const bcrypt = require('bcrypt');
-
-// const port = 8000;
-// var newUser;
-// var username;
-// var usersPath;
-// var otp;
+const port = 8000;
 var loggeduser;
-// const app = express();
+const staticpath = path.join(__dirname, '../Home');
+app.use(express.static(staticpath))
+app.get('/elements.json', (req, res) => {
+  const elements = path.join(__dirname, "/elements/elements.json")
+  const json = fs.readFileSync(elements, "utf-8");
+  res.send(json);
+});
 
 //function for sending otp on email => sendMail(email);
 function sendMail(email) {
   otp = (Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000).toString();
-  console.log('otp: '+otp)
+  console.log('otp: ' + otp)
   var transporter = nodemailer.createTransport({
     servie: 'gmail',
     host: 'smtp.gmail.com',
@@ -100,18 +85,18 @@ app.post('/signup/:username,:email,:password', (req, res) => {
   }
 });
 app.post('/otp/:otp', (req, res) => {
-   ////temp opration
-   const request = req.params;
-   if (request.otp == otp) {
+  ////temp opration
+  const request = req.params;
+  if (request.otp == otp) {
     fs.writeFileSync(usersPath, newUser)
     console.log('New user file created in local database');
     res.send('true')
-   }else{
+  } else {
     res.send('false')
-   }
-    /////////
+  }
+  /////////
 
-    
+
   // const request = req.params;
   // if (request.otp == otp) {
   //   let id = Math.floor(otp * Math.random() * 123);
@@ -174,29 +159,29 @@ app.post('/log-in/:username/:password', (req, res) => {
       } else {
         res.send('false');
       }
-    }else{
+    } else {
       res.send('false')
     }
-  } 
-checkUser();
+  }
+  checkUser();
 })
-        /////////
+/////////
 
 
-  // const checkUser = (err, data) => {
-  //   if (err) {
-  //     const loginPath = path.join(__dirname, `users/${username}.json`)
-  //     if (fs.existsSync(loginPath)) {
-  //       const user = JSON.parse(fs.readFileSync(loginPath));
-  //       if (user.username == username && user.password == password) {
-  //         loggeduser = username;
-  //         console.log(loggeduser);
-  //         res.write(loggeduser);
-  //         res.end()
-  //         console.log(username + ' logged in tgrough json file...');
-  //       } else {
-  //         res.send('false');
-  //       }
+// const checkUser = (err, data) => {
+//   if (err) {
+//     const loginPath = path.join(__dirname, `users/${username}.json`)
+//     if (fs.existsSync(loginPath)) {
+//       const user = JSON.parse(fs.readFileSync(loginPath));
+//       if (user.username == username && user.password == password) {
+//         loggeduser = username;
+//         console.log(loggeduser);
+//         res.write(loggeduser);
+//         res.end()
+//         console.log(username + ' logged in tgrough json file...');
+//       } else {
+//         res.send('false');
+//       }
 //       } else {
 //         res.send('false');
 //       }
@@ -218,9 +203,9 @@ checkUser();
 //             }
 //           }
 //         });
-    //   }
-    // }
-  // }
+//   }
+// }
+// }
 //   let query = `SELECT Password FROM test.users WHERE Name = "${username}";`
 //   runQuery(query, checkUser);
 
@@ -293,51 +278,51 @@ app.get('/changePassword', (req, res) => {
   const changePassword = path.join(__dirname, '../change-password/index.html');
   res.sendFile(changePassword);
 });
-app.get('/changePassword/style.css', (req, res) => {
-  const changePasswordStyle = path.join(__dirname, '../change-password/style.css');
-  res.sendFile(changePasswordStyle);
-});
+// app.get('/changePassword/style.css', (req, res) => {
+//   const changePasswordStyle = path.join(__dirname, '../change-password/style.css');
+//   res.sendFile(changePasswordStyle);
+// });
 app.get('/changePassword/script.js', (req, res) => {
   const changePasswordScript = path.join(__dirname, '../change-password/script.js');
   res.sendFile(changePasswordScript);
 });
-// app.get('/changeMyPassword/:newPassword', (req, res) => {
-//   const request = req.params;
-//   const userFile = path.join(__dirname, `users/${loggeduser}.json`);
-//   const userData = JSON.parse(fs.readFileSync(userFile));
-//   userData.password = request.newPassword;
-//   const newUserData = JSON.stringify(userData);
-//   fs.writeFileSync(userFile, newUserData);
-//   console.log('Password updated in local database...');
-//   new work
-//   const saltRounds = 10;
-//   bcrypt.genSalt(saltRounds, function (err, salt) {
-//     if (err) {
-//       console.log('Cannot update password in mysql database...');
-//     } else {
-//       bcrypt.hash(request.newPassword, salt, function (err, hash) {
-//         if (err) {
-//           console.log('Cannot update password in mysql database...')
-//         } else {
-//           const query = `UPDATE test.users set Password = '${hash}' where Name = "shivam";`
-//           const updataPassword = (err, result) => {
-//             if (err) {
-//               console.log('Cannot update password in mysql database...')
-//             } else {
-//               console.log('Password updated in mysql database...');
-//             }
-//           }
-//           runQuery(query, updataPassword);
-//         }
-//       });
-//     }
-//   });
+app.get('/changeMyPassword/:newPassword', (req, res) => {
+  const request = req.params;
+  const userFile = path.join(__dirname, `users/${loggeduser}.json`);
+  const userData = JSON.parse(fs.readFileSync(userFile));
+  userData.password = request.newPassword;
+  const newUserData = JSON.stringify(userData);
+  fs.writeFileSync(userFile, newUserData);
+  console.log('Password updated in local database...');
+  // // new work
+  // const saltRounds = 10;
+  // bcrypt.genSalt(saltRounds, function (err, salt) {
+  //   if (err) {
+  //     console.log('Cannot update password in mysql database...');
+  //   } else {
+  //     bcrypt.hash(request.newPassword, salt, function (err, hash) {
+  //       if (err) {
+  //         console.log('Cannot update password in mysql database...')
+  //       } else {
+  //         const query = `UPDATE test.users set Password = '${hash}' where Name = "shivam";`
+  //         const updataPassword = (err, result) => {
+  //           if (err) {
+  //             console.log('Cannot update password in mysql database...')
+  //           } else {
+  //             console.log('Password updated in mysql database...');
+  //           }
+  //         }
+  //         runQuery(query, updataPassword);
+  //       }
+  //     });
+  //   }
+  // });
 
-//   //end of now work
-//   res.send('<h1>Password changed successfully!</h1><a href="http://localhost:8000/log-in">Log-in</a>');
-// });
+  // //end of now work
+  res.send('true');
+});
 
-// //rouyt for getting elements json data
+// //rout for getting elements json data
 // app.get('/elements.json', (req, res) => {
 //   const elements = path.join(__dirname, "/elements/elements.json");
 //   const json = fs.readFileSync(elements, "utf-8");
@@ -348,7 +333,7 @@ app.get('/loggeduser', (req, res) => {
   if (!loggeduser) {
     res.send('false');
     console.log("User not logged-in")
-  } else if(loggeduser){
+  } else if (loggeduser) {
     res.send(loggeduser);
   }
 })
@@ -367,8 +352,7 @@ app.get('*', (req, res) => {
   const err404 = path.join(__dirname, '../err404/err404.html');
   res.sendFile(err404);
 });
-
-// //to listen at port
-// app.listen(port, () => {
-//   console.log(`listening at port : ${port} ;`);
-// });
+//to listen at port
+app.listen(port, () => {
+  console.log(`listening at port : ${port} ;`);
+});
